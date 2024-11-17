@@ -1,0 +1,47 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Attrition Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Attrition Predictor</h1>
+        <form method="POST">
+            
+
+            <label for="years_at_company">Years at Company:</label>
+            <input type="number" name="years_at_company" id="years_at_company" min="0" max="40" required>
+
+            <label for="age">Age:</label>
+            <input type="number" name="age" id="age" min="18" max="60" required>
+
+            <label for="work_life_balance">Work-Life Balance (1-4):</label>
+            <input type="number" name="work_life_balance" id="work_life_balance" min="1" max="4" required>
+
+            <label for="overtime">Overtime:</label>
+            <select name="overtime" id="overtime" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+
+            <label for="environment_satisfaction">Environment Satisfaction (1-4):</label>
+            <input type="number" name="environment_satisfaction" id="environment_satisfaction" min="1" max="4" required>
+
+            <label for="job_involvement">Job Involvement (1-4):</label>
+            <input type="number" name="job_involvement" id="job_involvement" min="1" max="4" required>
+
+            <input type="submit" value="Predict Attrition">
+        </form>
+
+        {% if likelihood %}
+        <div class="result">
+            <h2>Predicted Attrition Likelihood: {{ "%.2f"|format(likelihood) }}</h2>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
