@@ -3,17 +3,6 @@ import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 
-# Include all the functions from the original script here
-# (load_data, preprocess_data, check_numeric_features, normalize_features,
-# define_fuzzy_variables, define_fuzzy_rules, predict_attrition, normalize_input)
-
-# Modify the main function to return the prediction
-
-import pandas as pd
-import numpy as np
-import skfuzzy as fuzz
-from skfuzzy import control as ctrl
-
 
 def load_data(file_path):
     """Load dataset from a CSV file."""
