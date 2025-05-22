@@ -16,6 +16,10 @@ The project is organized as follows:
 -   `.gitignore`: Specifies intentionally untracked files that Git should ignore.
 -   `README.md`: This file, providing an overview and instructions for the project.
 
+## User Interface Features
+
+-   **Dynamic Gauge Chart**: The web interface now includes a dynamic gauge chart to visually represent the predicted employee attrition likelihood, providing an immediate and clear understanding of the model's output. This visualization is implemented using Chart.js, loaded via a CDN.
+
 ## Model Overview
 
 The model uses a fuzzy logic approach to predict the likelihood of employee attrition. Key factors considered in the model include:

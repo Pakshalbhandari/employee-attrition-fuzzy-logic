@@ -9,6 +9,7 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <div class="container">
@@ -81,11 +82,59 @@
       </div>
       {% endif %}
 
-      {% if likelihood %}
+      {% if likelihood is defined and likelihood is not none and likelihood is not string %}
       <div class="result">
-        <h2>Predicted Attrition Likelihood: {{ "%.2f"|format(likelihood) }}</h2>
+          <div class="gauge-container"> {# Container for the gauge #}
+              <canvas id="attritionGauge"></canvas>
+          </div>
+          <h2>Predicted Attrition Likelihood: {{ "%.2f"|format(likelihood) }}</h2>
       </div>
       {% endif %}
     </div>
+
+    <script>
+      const likelihoodValue = {{ likelihood|tojson if (likelihood is defined and likelihood is not none and likelihood is not string) else 'null' }};
+      if (likelihoodValue !== null && typeof likelihoodValue === 'number') {
+          const ctx = document.getElementById('attritionGauge').getContext('2d');
+          
+          function getGaugeColor(value) {
+              if (value <= 40) return 'green';
+              if (value <= 70) return 'orange';
+              return 'red';
+          }
+
+          const gaugeColor = getGaugeColor(likelihoodValue);
+
+          new Chart(ctx, {
+              type: 'doughnut',
+              data: {
+                  datasets: [{
+                      data: [likelihoodValue, 100 - likelihoodValue],
+                      backgroundColor: [gaugeColor, '#eee'], // Color for value and the remainder
+                      borderColor: [gaugeColor, '#eee'],
+                      borderWidth: 1,
+                      circumference: 180, // Half circle
+                      rotation: 270 // Start from the bottom (0 degrees is right, 270 is bottom for half-circle gauge starting left)
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  cutout: '70%', // Adjust for thickness of the gauge
+                  plugins: {
+                      legend: {
+                          display: false // Hide legend
+                      },
+                      tooltip: {
+                          enabled: false // Disable tooltips
+                      }
+                  },
+                  animation: {
+                      animateRotate: false // Optional: disable rotation animation
+                  }
+              }
+          });
+      }
+    </script>
   </body>
 </html>

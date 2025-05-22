@@ -68,3 +68,10 @@ input[type="submit"]:hover {
     padding: 10px;
     margin-bottom: 15px;
 }
+
+.gauge-container {
+    width: 200px;  /* Fixed width for the gauge */
+    height: 100px; /* Fixed height for the semi-circle doughnut */
+    margin: 20px auto; /* Adds some top/bottom margin and centers it horizontally */
+    position: relative; /* Useful for potential future text overlays */
+}
