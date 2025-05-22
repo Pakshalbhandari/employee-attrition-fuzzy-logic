@@ -74,6 +74,13 @@
         <input type="submit" value="Predict Attrition" />
       </form>
 
+      {% if error_message %}
+      <div class="error">
+          <h2>Error:</h2>
+          <p>{{ error_message }}</p>
+      </div>
+      {% endif %}
+
       {% if likelihood %}
       <div class="result">
         <h2>Predicted Attrition Likelihood: {{ "%.2f"|format(likelihood) }}</h2>

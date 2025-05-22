@@ -18,7 +18,10 @@ def index():
             'Gender_Male': int(request.form['gender'])
         }
         likelihood = predict_attrition_likelihood(input_data)
-        return render_template('index.html', likelihood=likelihood)
+        if isinstance(likelihood, str):
+            return render_template('index.html', error_message=likelihood)
+        else:
+            return render_template('index.html', likelihood=likelihood)
     return render_template('index.html')
 
 

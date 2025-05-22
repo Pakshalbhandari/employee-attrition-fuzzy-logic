@@ -60,3 +60,11 @@ input[type="submit"]:hover {
 .result h2 {
     color: #333;
 }
+
+.error {
+    background: #ffdddd;
+    border: 1px solid #f00;
+    color: #d8000c;
+    padding: 10px;
+    margin-bottom: 15px;
+}

@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 import skfuzzy as fuzz
@@ -19,7 +20,6 @@ def preprocess_data(data):
         data['OverTime_Yes'] = data['OverTime_Yes'].astype(int)
     if 'Gender_Male' in data.columns:
         data['Gender_Male'] = data['Gender_Male'].astype(int)
-    print(data)
     # Check for missing values and handle them
     data.fillna(data.mean(), inplace=True)
 
@@ -50,8 +50,6 @@ def normalize_features(data, features):
     normalized_features = (features_df - features_df.min()) / \
         (features_df.max() - features_df.min())
 
-    print("Normalized Features")
-    print(normalize_features)
     return normalized_features
 
 
@@ -68,7 +66,6 @@ def define_fuzzy_variables():
     environment_satisfaction = ctrl.Antecedent(
         np.arange(0, 1.1, 0.1), 'EnvironmentSatisfaction')
     job_involvement = ctrl.Antecedent(np.arange(0, 1.1, 0.1), 'JobInvolvement')
-    gender = ctrl.Antecedent(np.arange(0, 2, 1), 'Gender_Male')
 
     # Define membership functions
     over_time['no'] = fuzz.trimf(over_time.universe, [0, 0, 0.5])
@@ -190,7 +187,7 @@ def normalize_input(input_data, data, features):
 
 
 def predict_attrition_likelihood(input_data):
-    data_file_path = 'HR-Employee-Attrition.csv'
+    data_file_path = os.environ.get('DATA_FILE_PATH', 'HR-Employee-Attrition.csv')
     data = load_data(data_file_path)
     processed_data = preprocess_data(data)
 
@@ -210,7 +207,6 @@ def predict_attrition_likelihood(input_data):
 
         normalized_input = normalize_input(
             input_data, processed_data, features_to_use)
-        print(normalize_input)
         likelihood = predict_attrition(simulation_instance, normalized_input)
         return likelihood
     except ValueError as ve:
